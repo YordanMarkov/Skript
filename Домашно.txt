@@ -1,0 +1,23 @@
+###################################################################
+# Converting from yaml to json
+# Usage: python json_yaml.py -yaml a.yaml -json a.json              
+###################################################################
+import yaml
+import json
+import argparse
+from os import path
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-yaml', help='Input YAML file', required=True)
+parser.add_argument('-json', help='Input JSON file', required=True)
+args = parser.parse_args()
+
+if not path.exists(args.yaml):
+    print("File {} does not exist!".format(args.yaml))
+    exit(1)
+
+with open(args.yaml, 'r') as stream:
+    data_loaded = yaml.safe_load(stream)
+
+with open(args.json, 'w') as fp:
+    json.dump(data_loaded, fp, sort_keys=True, indent=4)
